@@ -1,6 +1,6 @@
 :root {
-  --frame-w: 1920;
-  --frame-h: 1080;
+  --w: 1920;
+  --h: 1080;
 }
 
 * {
@@ -8,19 +8,10 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-html,
-body {
+html, body {
   margin: 0;
-  width: 100%;
   height: 100%;
   background: #000;
-  overflow: hidden;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-body {
-  display: grid;
-  place-items: center;
 }
 
 .app {
@@ -32,72 +23,75 @@ body {
 
 .frame {
   position: relative;
-  width: min(100vw, calc(100vh * (var(--frame-w) / var(--frame-h))));
+  width: min(100vw, calc(100vh * (var(--w) / var(--h))));
   aspect-ratio: 1920 / 1080;
-  overflow: hidden;
 }
 
-.layout-image {
-  display: block;
+.layout {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  user-select: none;
   pointer-events: none;
-  -webkit-user-drag: none;
 }
+
+/* BOTÕES */
 
 .hotspot {
   position: absolute;
-  z-index: 5;
-  display: block;
-  border: 0;
-  background: transparent;
+  z-index: 10;
+  border: none;
+  background: none;
   padding: 0;
-  margin: 0;
   cursor: pointer;
-  touch-action: manipulation;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hotspot img {
-  display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain;
   pointer-events: none;
-  user-select: none;
-  -webkit-user-drag: none;
 }
+
+/* POSIÇÕES */
 
 #heartBtn {
   left: 64.6%;
   top: 75.4%;
-  width: 3.7%;
+  width: 4%;
+  height: 6%;
 }
 
 #playBtn {
   left: 71.2%;
   top: 71.8%;
   width: 7%;
+  height: 11%;
 }
 
 #volumeBtn {
   left: 80.1%;
   top: 75.2%;
-  width: 3.7%;
+  width: 4%;
+  height: 6%;
 }
+
+/* VOLUME */
 
 .volume-panel {
   position: absolute;
-  z-index: 6;
+  z-index: 20;
   left: 69.8%;
   top: 65.8%;
-  width: 14%;
-  height: 5%;
+  width: 15%;
+  height: 6%;
   display: none;
   align-items: center;
   padding: 10px;
   border-radius: 20px;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0,0,0,0.7);
 }
 
 .volume-panel.show {
@@ -108,6 +102,8 @@ body {
   width: 100%;
 }
 
+/* PLAYER ESCONDIDO */
+
 #yt-player {
   position: fixed;
   left: -9999px;
@@ -116,30 +112,35 @@ body {
   height: 200px;
 }
 
+/* MOBILE */
+
 @media (max-width: 768px) {
+
   #heartBtn {
     left: 60%;
     top: 76%;
-    width: 6.5%;
+    width: 7%;
+    height: 8%;
   }
 
   #playBtn {
     left: 69%;
     top: 73%;
-    width: 11%;
+    width: 12%;
+    height: 13%;
   }
 
   #volumeBtn {
     left: 82%;
     top: 76%;
-    width: 6.5%;
+    width: 7%;
+    height: 8%;
   }
 
   .volume-panel {
     left: 58%;
     top: 66%;
     width: 28%;
-    height: 6%;
-    padding: 8px;
+    height: 7%;
   }
 }
