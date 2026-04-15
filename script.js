@@ -1,5 +1,4 @@
-const CHANNEL_ID = "UCaggKtTEj2YdaToJjCV9vQw";
-const HEART_LINK = "https://www.vk.com/casillerorpg";
+const HEART_LINK = "https://www.youtube.com/@brokenplaysevil";
 
 const playBtn = document.getElementById("playBtn");
 const playIcon = document.getElementById("playIcon");
@@ -14,33 +13,23 @@ heartBtn.href = HEART_LINK;
 let player;
 let isPlaying = false;
 
-// cria player com LIVE do canal
 function onYouTubeIframeAPIReady() {
   player = new YT.Player("yt-player", {
-    videoId: "",
-
-    playerVars: {
-      autoplay: 0,
-      controls: 0,
-      modestbranding: 1,
-    },
-
     events: {
       onReady: () => {
-        // carrega live do canal automaticamente
-        player.loadVideoByUrl(
-          `https://www.youtube.com/embed/live_stream?channel=${CHANNEL_ID}`
-        );
-      },
-    },
+        player.setVolume(70);
+      }
+    }
   });
 }
 
-// play
+// PLAY / PAUSE
 playBtn.addEventListener("click", () => {
   if (!player) return;
 
-  if (!isPlaying) {
+  const state = player.getPlayerState();
+
+  if (state !== YT.PlayerState.PLAYING) {
     player.playVideo();
     isPlaying = true;
   } else {
@@ -51,10 +40,19 @@ playBtn.addEventListener("click", () => {
   updatePlayIcon();
 });
 
-// volume
+// VOLUME
 volumeSlider.addEventListener("input", (e) => {
-  const vol = e.target.value * 100;
-  if (player) player.setVolume(vol);
+  if (!player) return;
+
+  const vol = Math.round(e.target.value * 100);
+  player.setVolume(vol);
+
+  if (vol === 0) {
+    player.mute();
+  } else {
+    player.unMute();
+  }
+
   updateVolumeIcon();
 });
 
@@ -74,7 +72,7 @@ function updatePlayIcon() {
 function updateVolumeIcon() {
   if (!player) return;
 
-  const vol = player.getVolume();
+  const vol = player.isMuted() ? 0 : player.getVolume();
   volumeIcon.src =
     vol <= 1 ? "assets/volume-mute.png" : "assets/volume.png";
 }
