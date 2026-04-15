@@ -19,12 +19,12 @@ let volume = 0.7;
 const parentHost = window.location.hostname;
 
 player = new Twitch.Player("twitch-player", {
-  width: 1,
-  height: 1,
+  width: 400,
+  height: 300,
   channel: TWITCH_CHANNEL,
   parent: [parentHost],
   muted: true,
-  controls: false,
+  controls: true,
   autoplay: false,
 });
 
@@ -51,9 +51,18 @@ async function startRadio() {
   if (!isReady) return;
 
   try {
-    player.setMuted(false);
-    player.setVolume(volume);
+    player.setMuted(true);
     player.play();
+
+    setTimeout(() => {
+      try {
+        player.setVolume(volume);
+        player.setMuted(false);
+      } catch (error) {
+        console.error("Erro ao liberar áudio:", error);
+      }
+    }, 300);
+
     isPlaying = true;
     updatePlayIcon();
   } catch (error) {
@@ -96,6 +105,7 @@ document.addEventListener("click", () => {
 
 volumeSlider.addEventListener("input", (event) => {
   volume = Number(event.target.value);
+  updateVolumeIcon();
 
   if (!isReady) return;
 
@@ -107,8 +117,6 @@ volumeSlider.addEventListener("input", (event) => {
     } else {
       player.setMuted(false);
     }
-
-    updateVolumeIcon();
   } catch (error) {
     console.error("Erro ao ajustar volume:", error);
   }
