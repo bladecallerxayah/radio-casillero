@@ -1,5 +1,5 @@
-const TWITCH_CHANNEL = "radiocasillero";
-const HEART_LINK = "https://vk.com/casillerorpg";
+const CHANNEL_ID = "UCY9H3Fz6KX7v2m1ZJpZ6K1Q";
+const HEART_LINK = "https://www.youtube.com/@radiocasillero";
 
 const playBtn = document.getElementById("playBtn");
 const playIcon = document.getElementById("playIcon");
@@ -11,31 +11,60 @@ const heartBtn = document.getElementById("heartBtn");
 
 heartBtn.href = HEART_LINK;
 
-let player = null;
-let isReady = false;
+let player;
 let isPlaying = false;
-let volume = 0.7;
 
-const parentHost = window.location.hostname;
+// cria player com LIVE do canal
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player("yt-player", {
+    videoId: "",
 
-player = new Twitch.Player("twitch-player", {
-  width: 400,
-  height: 300,
-  channel: TWITCH_CHANNEL,
-  parent: [parentHost],
-  muted: true,
-  controls: true,
-  autoplay: false,
+    playerVars: {
+      autoplay: 0,
+      controls: 0,
+      modestbranding: 1,
+    },
+
+    events: {
+      onReady: () => {
+        // carrega live do canal automaticamente
+        player.loadVideoByUrl(
+          `https://www.youtube.com/embed/live_stream?channel=${CHANNEL_ID}`
+        );
+      },
+    },
+  });
+}
+
+// play
+playBtn.addEventListener("click", () => {
+  if (!player) return;
+
+  if (!isPlaying) {
+    player.playVideo();
+    isPlaying = true;
+  } else {
+    player.pauseVideo();
+    isPlaying = false;
+  }
+
+  updatePlayIcon();
 });
 
-player.addEventListener(Twitch.Player.READY, () => {
-  isReady = true;
+// volume
+volumeSlider.addEventListener("input", (e) => {
+  const vol = e.target.value * 100;
+  if (player) player.setVolume(vol);
+  updateVolumeIcon();
+});
 
-  try {
-    player.setVolume(volume);
-  } catch (error) {
-    console.error("Erro ao definir volume inicial:", error);
-  }
+volumeBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  volumePanel.classList.toggle("show");
+});
+
+document.addEventListener("click", () => {
+  volumePanel.classList.remove("show");
 });
 
 function updatePlayIcon() {
@@ -43,84 +72,9 @@ function updatePlayIcon() {
 }
 
 function updateVolumeIcon() {
+  if (!player) return;
+
+  const vol = player.getVolume();
   volumeIcon.src =
-    volume <= 0.01 ? "assets/volume-mute.png" : "assets/volume.png";
+    vol <= 1 ? "assets/volume-mute.png" : "assets/volume.png";
 }
-
-async function startRadio() {
-  if (!isReady) return;
-
-  try {
-    player.setMuted(true);
-    player.play();
-
-    setTimeout(() => {
-      try {
-        player.setVolume(volume);
-        player.setMuted(false);
-      } catch (error) {
-        console.error("Erro ao liberar áudio:", error);
-      }
-    }, 300);
-
-    isPlaying = true;
-    updatePlayIcon();
-  } catch (error) {
-    console.error("Não foi possível iniciar a rádio:", error);
-  }
-}
-
-function pauseRadio() {
-  if (!isReady) return;
-
-  try {
-    player.pause();
-    isPlaying = false;
-    updatePlayIcon();
-  } catch (error) {
-    console.error("Não foi possível pausar a rádio:", error);
-  }
-}
-
-playBtn.addEventListener("click", async () => {
-  if (!isPlaying) {
-    await startRadio();
-  } else {
-    pauseRadio();
-  }
-});
-
-volumeBtn.addEventListener("click", (event) => {
-  event.stopPropagation();
-  volumePanel.classList.toggle("show");
-});
-
-volumePanel.addEventListener("click", (event) => {
-  event.stopPropagation();
-});
-
-document.addEventListener("click", () => {
-  volumePanel.classList.remove("show");
-});
-
-volumeSlider.addEventListener("input", (event) => {
-  volume = Number(event.target.value);
-  updateVolumeIcon();
-
-  if (!isReady) return;
-
-  try {
-    player.setVolume(volume);
-
-    if (volume <= 0.01) {
-      player.setMuted(true);
-    } else {
-      player.setMuted(false);
-    }
-  } catch (error) {
-    console.error("Erro ao ajustar volume:", error);
-  }
-});
-
-updatePlayIcon();
-updateVolumeIcon();
