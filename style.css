@@ -3,6 +3,11 @@
   --art-h: 1080;
 }
 
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
 html, body {
   margin: 0;
   width: 100%;
@@ -11,37 +16,65 @@ html, body {
   overflow: hidden;
 }
 
+body {
+  display: grid;
+  place-items: center;
+}
+
 .stage {
   position: relative;
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
 }
 
+/* imagem base */
 .artboard {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  inset: 0;
+  margin: auto;
+  width: 100vw;
+  height: 100vh;
   object-fit: contain;
+  object-position: center;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* área clicável com a MESMA proporção da imagem */
+.overlay {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: min(100vw, calc(100vh * (var(--art-w) / var(--art-h))));
+  height: min(100vh, calc(100vw * (var(--art-h) / var(--art-w))));
   pointer-events: none;
 }
 
-.overlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
+/* só os botões recebem clique */
 .hotspot {
   position: absolute;
-  border: none;
-  background: none;
+  display: block;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0;
   cursor: pointer;
+  pointer-events: auto;
+  touch-action: manipulation;
 }
 
 .hotspot img {
+  display: block;
   width: 100%;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
+/* posições */
 #heartBtn {
   left: 64.6%;
   top: 75.4%;
@@ -67,9 +100,11 @@ html, body {
   width: 14%;
   height: 5%;
   display: none;
-  background: rgba(0,0,0,0.7);
+  align-items: center;
+  background: rgba(0, 0, 0, 0.7);
   padding: 10px;
   border-radius: 20px;
+  pointer-events: auto;
 }
 
 .volume-panel.show {
@@ -80,6 +115,7 @@ html, body {
   width: 100%;
 }
 
+/* player escondido */
 #yt-player {
   position: fixed;
   left: -9999px;
@@ -88,8 +124,8 @@ html, body {
   height: 200px;
 }
 
+/* mobile */
 @media (max-width: 768px) {
-
   #heartBtn {
     left: 60%;
     top: 76%;
@@ -115,5 +151,4 @@ html, body {
     height: 6%;
     padding: 8px;
   }
-
 }
