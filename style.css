@@ -84,7 +84,6 @@ body {
   -webkit-user-drag: none;
 }
 
-/* alinhamento refinado do bloco: coração | play | volume */
 #heartBtn {
   left: 64.6%;
   top: 75.4%;
@@ -95,7 +94,7 @@ body {
 #playBtn {
   left: 71.2%;
   top: 71.8%;
-  width: 7.0%;
+  width: 7%;
   aspect-ratio: 1 / 1;
 }
 
@@ -166,14 +165,19 @@ body {
   cursor: pointer;
 }
 
-#twitch-player {
+#twitch-player-wrap {
   position: fixed;
-  width: 1px;
-  height: 1px;
   left: -9999px;
   top: -9999px;
-  opacity: 0;
+  width: 400px;
+  height: 300px;
+  overflow: hidden;
   pointer-events: none;
+}
+
+#twitch-player {
+  width: 400px;
+  height: 300px;
 }
 
 @media (max-width: 900px) {
