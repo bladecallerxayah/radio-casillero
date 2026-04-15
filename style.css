@@ -1,6 +1,6 @@
 :root {
-  --art-w: 1920;
-  --art-h: 1080;
+  --frame-w: 1920;
+  --frame-h: 1080;
 }
 
 * {
@@ -8,12 +8,14 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   width: 100%;
   height: 100%;
   background: #000;
   overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
@@ -21,47 +23,39 @@ body {
   place-items: center;
 }
 
-.stage {
-  position: relative;
+.app {
   width: 100vw;
   height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.frame {
+  position: relative;
+  width: min(100vw, calc(100vh * (var(--frame-w) / var(--frame-h))));
+  aspect-ratio: 1920 / 1080;
   overflow: hidden;
 }
 
-/* imagem base */
-.artboard {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 100vw;
-  height: 100vh;
+.layout-image {
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  object-position: center;
-  pointer-events: none;
   user-select: none;
+  pointer-events: none;
   -webkit-user-drag: none;
 }
 
-/* área clicável com a MESMA proporção da imagem */
-.overlay {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: min(100vw, calc(100vh * (var(--art-w) / var(--art-h))));
-  height: min(100vh, calc(100vw * (var(--art-h) / var(--art-w))));
-  pointer-events: none;
-}
-
-/* só os botões recebem clique */
 .hotspot {
   position: absolute;
+  z-index: 5;
   display: block;
   border: 0;
   background: transparent;
   padding: 0;
   margin: 0;
   cursor: pointer;
-  pointer-events: auto;
   touch-action: manipulation;
 }
 
@@ -74,7 +68,6 @@ body {
   -webkit-user-drag: none;
 }
 
-/* posições */
 #heartBtn {
   left: 64.6%;
   top: 75.4%;
@@ -95,16 +88,16 @@ body {
 
 .volume-panel {
   position: absolute;
+  z-index: 6;
   left: 69.8%;
   top: 65.8%;
   width: 14%;
   height: 5%;
   display: none;
   align-items: center;
-  background: rgba(0, 0, 0, 0.7);
   padding: 10px;
   border-radius: 20px;
-  pointer-events: auto;
+  background: rgba(0, 0, 0, 0.7);
 }
 
 .volume-panel.show {
@@ -115,7 +108,6 @@ body {
   width: 100%;
 }
 
-/* player escondido */
 #yt-player {
   position: fixed;
   left: -9999px;
@@ -124,7 +116,6 @@ body {
   height: 200px;
 }
 
-/* mobile */
 @media (max-width: 768px) {
   #heartBtn {
     left: 60%;
