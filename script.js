@@ -76,3 +76,7 @@ function updateVolumeIcon() {
   volumeIcon.src =
     vol <= 1 ? "assets/volume-mute.png" : "assets/volume.png";
 }
+
+.hotspot {
+  touch-action: manipulation;
+}
