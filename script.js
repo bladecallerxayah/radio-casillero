@@ -1,5 +1,5 @@
 const CHANNEL_ID = "UCaggKtTEj2YdaToJjCV9vQw";
-const HEART_LINK = "https://www.youtube.com/@radiocasillero";
+const HEART_LINK = "https://www.vk.com/casillerorpg";
 
 const playBtn = document.getElementById("playBtn");
 const playIcon = document.getElementById("playIcon");
