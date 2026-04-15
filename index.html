@@ -1,71 +1,46 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rádio Casillero</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="app">
-    <div class="frame">
-      <img class="layout-image" src="assets/layout.png" alt="Rádio Casillero" />
 
-      <a
-        id="heartBtn"
-        class="hotspot"
-        href="https://www.youtube.com/@brokenplaysevil"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Abrir canal"
-      >
-        <img src="assets/heart.png" alt="" />
-      </a>
+<div class="app">
+  <div class="frame">
 
-      <button
-        id="playBtn"
-        class="hotspot"
-        type="button"
-        aria-label="Tocar ou pausar"
-      >
-        <img id="playIcon" src="assets/play.png" alt="" />
-      </button>
+    <img src="assets/layout.png" class="layout">
 
-      <button
-        id="volumeBtn"
-        class="hotspot"
-        type="button"
-        aria-label="Abrir volume"
-      >
-        <img id="volumeIcon" src="assets/volume.png" alt="" />
-      </button>
+    <a id="heartBtn" class="hotspot" target="_blank">
+      <img src="assets/heart.png">
+    </a>
 
-      <div id="volumePanel" class="volume-panel" aria-hidden="true">
-        <input
-          id="volumeSlider"
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          value="70"
-          aria-label="Controle de volume"
-        />
-      </div>
+    <button id="playBtn" class="hotspot">
+      <img id="playIcon" src="assets/play.png">
+    </button>
+
+    <button id="volumeBtn" class="hotspot">
+      <img id="volumeIcon" src="assets/volume.png">
+    </button>
+
+    <div id="volumePanel" class="volume-panel">
+      <input id="volumeSlider" type="range" min="0" max="100" value="70">
     </div>
-  </main>
 
-  <iframe
-    id="yt-player"
-    width="300"
-    height="200"
-    src="https://www.youtube.com/embed/live_stream?channel=UCaggKtTEj2YdaToJjCV9vQw&enablejsapi=1&playsinline=1"
-    title="YouTube player"
-    frameborder="0"
-    allow="autoplay; encrypted-media"
-    referrerpolicy="strict-origin-when-cross-origin"
-  ></iframe>
+  </div>
+</div>
 
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <script src="script.js"></script>
+<!-- PLAYER YOUTUBE -->
+<iframe
+  id="yt-player"
+  src="https://www.youtube.com/embed/live_stream?channel=UCaggKtTEj2YdaToJjCV9vQw&enablejsapi=1&playsinline=1"
+  allow="autoplay"
+></iframe>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="script.js"></script>
+
 </body>
 </html>
