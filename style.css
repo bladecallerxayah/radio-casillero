@@ -42,7 +42,6 @@ html, body {
   width: 100%;
 }
 
-/* posições */
 #heartBtn {
   left: 64.6%;
   top: 75.4%;
@@ -81,11 +80,40 @@ html, body {
   width: 100%;
 }
 
-/* player escondido */
 #yt-player {
   position: fixed;
   left: -9999px;
   top: -9999px;
   width: 300px;
   height: 200px;
+}
+
+@media (max-width: 768px) {
+
+  #heartBtn {
+    left: 60%;
+    top: 76%;
+    width: 6.5%;
+  }
+
+  #playBtn {
+    left: 69%;
+    top: 73%;
+    width: 11%;
+  }
+
+  #volumeBtn {
+    left: 82%;
+    top: 76%;
+    width: 6.5%;
+  }
+
+  .volume-panel {
+    left: 58%;
+    top: 66%;
+    width: 28%;
+    height: 6%;
+    padding: 8px;
+  }
+
 }
