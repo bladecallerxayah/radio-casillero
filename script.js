@@ -1,4 +1,4 @@
-const CHANNEL_ID = "UCY9H3Fz6KX7v2m1ZJpZ6K1Q";
+const CHANNEL_ID = "UCaggKtTEj2YdaToJjCV9vQw";
 const HEART_LINK = "https://www.youtube.com/@radiocasillero";
 
 const playBtn = document.getElementById("playBtn");
