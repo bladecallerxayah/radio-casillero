@@ -1,16 +1,11 @@
-const HEART_LINK = "https://www.youtube.com/@brokenplaysevil";
-
 const playBtn = document.getElementById("playBtn");
 const playIcon = document.getElementById("playIcon");
 const volumeBtn = document.getElementById("volumeBtn");
 const volumeIcon = document.getElementById("volumeIcon");
 const volumePanel = document.getElementById("volumePanel");
 const volumeSlider = document.getElementById("volumeSlider");
-const heartBtn = document.getElementById("heartBtn");
 
-heartBtn.href = HEART_LINK;
-
-let player;
+let player = null;
 let isPlaying = false;
 
 function onYouTubeIframeAPIReady() {
@@ -18,12 +13,12 @@ function onYouTubeIframeAPIReady() {
     events: {
       onReady: () => {
         player.setVolume(70);
+        updateVolumeIcon();
       }
     }
   });
 }
 
-// PLAY / PAUSE
 playBtn.addEventListener("click", () => {
   if (!player) return;
 
@@ -40,29 +35,32 @@ playBtn.addEventListener("click", () => {
   updatePlayIcon();
 });
 
-// VOLUME
-volumeSlider.addEventListener("input", (e) => {
+volumeBtn.addEventListener("click", (event) => {
+  event.stopPropagation();
+  volumePanel.classList.toggle("show");
+});
+
+volumePanel.addEventListener("click", (event) => {
+  event.stopPropagation();
+});
+
+document.addEventListener("click", () => {
+  volumePanel.classList.remove("show");
+});
+
+volumeSlider.addEventListener("input", (event) => {
   if (!player) return;
 
-  const vol = Math.round(e.target.value * 100);
+  const vol = Number(event.target.value);
   player.setVolume(vol);
 
-  if (vol === 0) {
+  if (vol <= 0) {
     player.mute();
   } else {
     player.unMute();
   }
 
   updateVolumeIcon();
-});
-
-volumeBtn.addEventListener("click", (e) => {
-  e.stopPropagation();
-  volumePanel.classList.toggle("show");
-});
-
-document.addEventListener("click", () => {
-  volumePanel.classList.remove("show");
 });
 
 function updatePlayIcon() {
@@ -73,10 +71,5 @@ function updateVolumeIcon() {
   if (!player) return;
 
   const vol = player.isMuted() ? 0 : player.getVolume();
-  volumeIcon.src =
-    vol <= 1 ? "assets/volume-mute.png" : "assets/volume.png";
-}
-
-.hotspot {
-  touch-action: manipulation;
+  volumeIcon.src = vol <= 1 ? "assets/volume-mute.png" : "assets/volume.png";
 }
