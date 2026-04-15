@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rádio Casillero</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="stage">
+    <img
+      class="artboard"
+      src="assets/layout.png"
+      alt="Rádio Casillero"
+    />
+
+    <div class="overlay">
+      <a
+        id="heartBtn"
+        class="hotspot"
+        href="https://SEU-LINK-DO-CORACAO.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Abrir link do coração"
+      >
+        <img src="assets/heart.png" alt="" />
+      </a>
+
+      <button
+        id="playBtn"
+        class="hotspot"
+        type="button"
+        aria-label="Tocar ou pausar rádio"
+        title="Tocar / Pausar"
+      >
+        <img id="playIcon" src="assets/play.png" alt="" />
+      </button>
+
+      <button
+        id="volumeBtn"
+        class="hotspot"
+        type="button"
+        aria-label="Abrir controle de volume"
+        title="Volume"
+      >
+        <img id="volumeIcon" src="assets/volume.png" alt="" />
+      </button>
+
+      <div id="volumePanel" class="volume-panel" aria-hidden="true">
+        <input
+          id="volumeSlider"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.7"
+          aria-label="Controle de volume"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div id="twitch-player"></div>
+
+  <script src="https://player.twitch.tv/js/embed/v1.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
