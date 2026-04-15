@@ -1,11 +1,16 @@
+const HEART_LINK = "https://www.vk.com/casillerorpg";
+
 const playBtn = document.getElementById("playBtn");
 const playIcon = document.getElementById("playIcon");
 const volumeBtn = document.getElementById("volumeBtn");
 const volumeIcon = document.getElementById("volumeIcon");
 const volumePanel = document.getElementById("volumePanel");
 const volumeSlider = document.getElementById("volumeSlider");
+const heartBtn = document.getElementById("heartBtn");
 
-let player = null;
+heartBtn.href = HEART_LINK;
+
+let player;
 let isPlaying = false;
 
 function onYouTubeIframeAPIReady() {
@@ -13,12 +18,12 @@ function onYouTubeIframeAPIReady() {
     events: {
       onReady: () => {
         player.setVolume(70);
-        updateVolumeIcon();
       }
     }
   });
 }
 
+// PLAY
 playBtn.addEventListener("click", () => {
   if (!player) return;
 
@@ -35,26 +40,23 @@ playBtn.addEventListener("click", () => {
   updatePlayIcon();
 });
 
-volumeBtn.addEventListener("click", (event) => {
-  event.stopPropagation();
+// VOLUME
+volumeBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
   volumePanel.classList.toggle("show");
-});
-
-volumePanel.addEventListener("click", (event) => {
-  event.stopPropagation();
 });
 
 document.addEventListener("click", () => {
   volumePanel.classList.remove("show");
 });
 
-volumeSlider.addEventListener("input", (event) => {
+volumeSlider.addEventListener("input", (e) => {
   if (!player) return;
 
-  const vol = Number(event.target.value);
+  const vol = Number(e.target.value);
   player.setVolume(vol);
 
-  if (vol <= 0) {
+  if (vol === 0) {
     player.mute();
   } else {
     player.unMute();
@@ -63,6 +65,7 @@ volumeSlider.addEventListener("input", (event) => {
   updateVolumeIcon();
 });
 
+// UI
 function updatePlayIcon() {
   playIcon.src = isPlaying ? "assets/pause.png" : "assets/play.png";
 }
@@ -71,5 +74,6 @@ function updateVolumeIcon() {
   if (!player) return;
 
   const vol = player.isMuted() ? 0 : player.getVolume();
-  volumeIcon.src = vol <= 1 ? "assets/volume-mute.png" : "assets/volume.png";
+  volumeIcon.src =
+    vol <= 1 ? "assets/volume-mute.png" : "assets/volume.png";
 }
